@@ -9,11 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
-
   import LoginForm from './components/login-form.vue';
-
-  const router = useRouter();
 </script>
 
 <style lang="less" scoped>

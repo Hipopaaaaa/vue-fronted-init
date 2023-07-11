@@ -12,7 +12,7 @@ export default mergeConfig(
       // todo 代理
       proxy: {
         '/api': {
-          target: 'http://localhost:8080',
+          target: 'http://localhost:8101',
           changeOrigin: true,
         },
       },

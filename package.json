@@ -12,7 +12,8 @@
     "preview": "npm run build && vite preview --host",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "lint-staged": "npx lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "openapi": "ts-node openapi.config.ts"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "@arco-design/web-vue": "^2.44.7",
+    "@umijs/openapi": "^1.8.3",
     "@vueuse/core": "^9.3.0",
     "arco-design-pro-vue": "^2.7.2",
     "axios": "^0.24.0",
