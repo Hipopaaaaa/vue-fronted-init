@@ -1,7 +1,7 @@
 <template>
   <div class="login-form-wrapper">
-    <div class="login-form-title">登陆用户管理中心</div>
-    <div class="login-form-sub-title">用户管理中心</div>
+    <div class="login-form-title">修改密码</div>
+    <div class="login-form-sub-title">你怎么把密码忘了</div>
     <div class="login-form-error-msg">{{ errorMessage }}</div>
     <a-form
       ref="loginForm"
@@ -12,7 +12,10 @@
     >
       <a-form-item
         field="userAccount"
-        :rules="[{ required: true, message: '用户名不能为空' }]"
+        :rules="[
+          { required: true, message: '用户名不能为空' },
+          { minLength: 4, message: '用户名长度不能小于4' },
+        ]"
         :validate-trigger="['change', 'blur']"
         hide-label
       >
@@ -22,6 +25,23 @@
           </template>
         </a-input>
       </a-form-item>
+
+      <a-form-item
+        field="phone"
+        :rules="[
+          { required: true, message: '电话不能为空' },
+          { minLength: 8, message: '手机号格式有误' },
+        ]"
+        :validate-trigger="['change', 'blur']"
+        hide-label
+      >
+        <a-input v-model="userInfo.phone" placeholder="请输入手机号">
+          <template #prefix>
+            <icon-phone />
+          </template>
+        </a-input>
+      </a-form-item>
+
       <a-form-item
         field="userPassword"
         :rules="[
@@ -33,7 +53,7 @@
       >
         <a-input-password
           v-model="userInfo.userPassword"
-          placeholder="请输入密码"
+          placeholder="请输入新密码"
           allow-clear
         >
           <template #prefix>
@@ -41,28 +61,18 @@
           </template>
         </a-input-password>
       </a-form-item>
-      <!--  注册、忘记密码、可用    -->
+
       <a-space :size="16" direction="vertical">
-        <div class="login-form-password-actions">
-          <a-checkbox
-            checked="rememberPassword"
-            :model-value="loginConfig.rememberPassword"
-            @change="setRememberPassword as any"
-          >
-            记住密码
-          </a-checkbox>
-          <a-link @click="goToForget">忘记密码</a-link>
-        </div>
         <a-button type="primary" html-type="submit" long :loading="loading">
-          登录
+          找回
         </a-button>
         <a-button
           type="text"
           long
           class="login-form-register-btn"
-          @click="goToRegister"
+          @click="goToLogin"
         >
-          注册账号
+          返回
         </a-button>
       </a-space>
     </a-form>
@@ -70,15 +80,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, onMounted } from 'vue';
+  import { ref, reactive } from 'vue';
   import { useRouter } from 'vue-router';
-  import { Message } from '@arco-design/web-vue';
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
 
-  import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
-  import type { LoginData } from '@/api/user';
+  import type { ForgetData } from '@/api/user';
 
   const router = useRouter();
 
@@ -86,14 +94,10 @@
   const { loading, setLoading } = useLoading();
   const userStore = useUserStore();
 
-  const loginConfig = useStorage('login-config', {
-    rememberPassword: true,
-    userAccount: '', // 演示默认值
-    userPassword: '', // demo default value
-  });
   const userInfo = reactive({
-    userAccount: loginConfig.value.userAccount,
-    userPassword: loginConfig.value.userPassword,
+    userAccount: '',
+    userPassword: '',
+    phone: '',
   });
 
   const handleSubmit = async ({
@@ -107,7 +111,7 @@
     if (!errors) {
       setLoading(true);
       try {
-        await userStore.login(values as LoginData);
+        await userStore.forget(values as ForgetData);
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Workplace',
@@ -115,13 +119,6 @@
             ...othersQuery,
           },
         });
-        Message.success('欢迎使用');
-        const { rememberPassword } = loginConfig.value;
-        const { userAccount, userPassword } = values;
-        // 实际生产环境需要进行加密存储。
-        // The actual production environment requires encrypted storage.
-        loginConfig.value.userAccount = rememberPassword ? userAccount : '';
-        loginConfig.value.userPassword = rememberPassword ? userPassword : '';
       } catch (err) {
         errorMessage.value = (err as Error).message;
       } finally {
@@ -129,20 +126,10 @@
       }
     }
   };
-  const setRememberPassword = (value: boolean) => {
-    loginConfig.value.rememberPassword = value;
-  };
-
-  // 跳转到注册页
-  const goToRegister = () => {
+  // 跳转到登陆页
+  const goToLogin = () => {
     router.push({
-      name: 'register',
-    });
-  };
-  // 跳转到忘记密码页
-  const goToForget = () => {
-    router.push({
-      name: 'forget',
+      name: 'login',
     });
   };
 </script>

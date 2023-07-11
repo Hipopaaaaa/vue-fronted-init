@@ -3,14 +3,7 @@
     <a-affix ref="affixRef" :offset-top="offsetTop">
       <div class="tab-bar-box">
         <div class="tab-bar-scroll">
-          <div class="tags-wrap">
-            <tab-item
-              v-for="(tag, index) in tagList"
-              :key="tag.fullPath"
-              :index="index"
-              :item-data="tag"
-            />
-          </div>
+          <div class="tags-wrap"> </div>
         </div>
         <div class="tag-bar-operation"></div>
       </div>
@@ -26,7 +19,6 @@
     removeRouteListener,
   } from '@/utils/route-listener';
   import { useAppStore, useTabBarStore } from '@/store';
-  import tabItem from './tab-item.vue';
 
   const appStore = useAppStore();
   const tabBarStore = useTabBarStore();

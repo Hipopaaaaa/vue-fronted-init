@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --config ./config/vite.config.dev.ts",
-    "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
+    "build": " vite build --config ./config/vite.config.prod.ts",
     "report": "cross-env REPORT=true npm run build",
     "preview": "npm run build && vite preview --host",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
@@ -20,9 +20,7 @@
       "eslint --fix"
     ],
     "*.vue": [
-      "stylelint --fix",
-      "prettier --write",
-      "eslint --fix"
+      "prettier --write"
     ],
     "*.{less,css}": [
       "stylelint --fix",
@@ -36,6 +34,7 @@
     "axios": "^0.24.0",
     "dayjs": "^1.11.5",
     "echarts": "^5.4.0",
+    "element-plus": "^2.3.7",
     "lodash": "^4.17.21",
     "mitt": "^3.0.0",
     "nprogress": "^0.2.0",

@@ -33,11 +33,9 @@
           <Menu />
         </a-drawer>
         <a-layout class="layout-content" :style="paddingStyle">
-          <TabBar v-if="appStore.tabBar" />
           <a-layout-content>
             <PageLayout />
           </a-layout-content>
-          <Footer v-if="footer" />
         </a-layout>
       </a-layout>
     </a-layout>
@@ -50,8 +48,7 @@
   import { useAppStore, useUserStore } from '@/store';
   import NavBar from '@/components/navbar/index.vue';
   import Menu from '@/components/menu/index.vue';
-  import Footer from '@/components/footer/index.vue';
-  import TabBar from '@/components/tab-bar/index.vue';
+
   import usePermission from '@/hooks/permission';
   import useResponsive from '@/hooks/responsive';
   import PageLayout from './page-layout.vue';

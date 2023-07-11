@@ -9,9 +9,7 @@
       :class="{ 'link-activated': itemData.fullPath === $route.fullPath }"
       @click="goto(itemData)"
     >
-      <span class="tag-link">
-        {{ $t(itemData.title) }}
-      </span>
+      <span class="tag-link"> 颜色 </span>
       <span
         class="arco-icon-hover arco-tag-icon-hover arco-icon-hover-size-medium arco-tag-close-btn"
         @click.stop="tagClose(itemData, index)"

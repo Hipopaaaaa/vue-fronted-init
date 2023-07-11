@@ -5,6 +5,8 @@ import { useUserStore } from '@/store';
 import { isLogin } from '@/utils/auth';
 
 export default function setupUserLoginInfoGuard(router: Router) {
+  // 不需要登陆就能访问的页面
+  const whiteList: string[] = ['register', 'login', 'forget'];
   router.beforeEach(async (to, from, next) => {
     NProgress.start();
     const userStore = useUserStore();
@@ -26,6 +28,8 @@ export default function setupUserLoginInfoGuard(router: Router) {
           });
         }
       }
+    } else if (whiteList.includes(<string>to.name)) {
+      next();
     } else {
       if (to.name === 'login') {
         next();
@@ -39,5 +43,6 @@ export default function setupUserLoginInfoGuard(router: Router) {
         } as LocationQueryRaw,
       });
     }
+    // next();
   });
 }

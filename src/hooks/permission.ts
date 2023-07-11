@@ -1,6 +1,7 @@
 import { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
 import { useUserStore } from '@/store';
 
+// 做权限认证的地方，后期再改
 export default function usePermission() {
   const userStore = useUserStore();
   return {

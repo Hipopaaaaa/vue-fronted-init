@@ -26,6 +26,19 @@ export default mergeConfig(
       },
       chunkSizeWarningLimit: 2000,
     },
+    server: {
+      open: true,
+      fs: {
+        strict: true,
+      },
+      // 代理
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+        },
+      },
+    },
   },
   baseConfig
 );
