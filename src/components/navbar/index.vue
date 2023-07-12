@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img class="left-logo" alt="logo" src="@/assets/logo.jpeg" />
+        <img class="left-logo" alt="logo" src="../../assets/favicon.ico" />
         <a-typography-title
           :style="{ margin: 0, fontSize: '18px' }"
           :heading="5"
@@ -152,9 +152,9 @@
       text-decoration: none;
     }
     .nav-btn {
-      border-color: rgb(var(--gray-2));
       color: rgb(var(--gray-8));
       font-size: 16px;
+      border-color: rgb(var(--gray-2));
     }
     .trigger-btn,
     .ref-btn {
