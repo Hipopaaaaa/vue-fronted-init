@@ -112,7 +112,7 @@ export function logout() {
 
 // 获取用户信息接口
 export function getUserInfo() {
-  return axios.get<UserState>('/api/user/current');
+  return axios.get<UserState>('/api/user/get/login');
 }
 
 // 获取用户列表接口
