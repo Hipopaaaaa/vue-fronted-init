@@ -79,6 +79,7 @@
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
   import type { LoginData } from '@/api/user';
+  import { USER_KEY } from '@/utils/auth';
 
   const router = useRouter();
 
@@ -107,7 +108,9 @@
     if (!errors) {
       setLoading(true);
       try {
-        await userStore.login(values as LoginData);
+        const res = await userStore.login(values as LoginData);
+        // 在本地保存登陆态
+        localStorage.setItem(USER_KEY, JSON.stringify(res));
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Workplace',
