@@ -2,7 +2,7 @@ import type { Router, LocationQueryRaw } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
 
 import { useUserStore } from '@/store';
-import { isLogin } from '@/utils/auth';
+import { clearToken, isLogin } from '@/utils/auth';
 
 export default function setupUserLoginInfoGuard(router: Router) {
   // 不需要登陆就能访问的页面
@@ -15,7 +15,13 @@ export default function setupUserLoginInfoGuard(router: Router) {
         next();
       } else {
         try {
-          await userStore.info();
+          const res = await userStore.info();
+          if (!res) {
+            clearToken();
+            router.push({
+              name: 'login',
+            });
+          }
           next();
         } catch (error) {
           await userStore.logout();
